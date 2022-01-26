@@ -1,34 +1,14 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const http = require('http');
 
-const mysql = require("mysql");
+const hostname = '127.0.0.1';
+const port = 3000;
 
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-
-
-
-
-const connection = mysql.createConnection({
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World');
 });
 
-
-connection.connect(error => {
-  if (error) throw error;
-  console.log("Successfully connected to the database.");
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
-
-module.exports = connection;
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
-
-
